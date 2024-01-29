@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Review and send order</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <div class="total" id="total"></div>
+
+      <section id="Billing">
+        <div class="billing-name">
+          <form>
+            <label for="">
+              <input id="radio" type="radio" />
+              Checkout Billing Address
+            </label>
+          </form>
+        </div>
+
+        <div class="billing-container">
+          <div class="billing-name1 content labels">
+            <label for="Name">Name(First/Last)</label>
+            <label for="Address">Address</label>
+            <label for="State">State</label>
+            <label for="Zip">Zip</label>
+            <label for="CellPhone" id="cellPhone">Cell Phone</label>
+          </div>
+
+          <div class="billing1 content inputs">
+            <input type="text" name="Name" required />
+            <input type="text" name="Address" required />
+            <input type="text" name="State" required />
+            <input type="text" name="Zip" />
+            <input type="text" name="CellPhone" />
+          </div>
+
+          <div class="billing-name2 content labels">
+            <label for="CompanyName">Company Name(First/Last)</label>
+            <label for="City">City/Town</label>
+            <label for="Country">Country</label>
+            <label for="Phone">Phone</label>
+            <label for="Email">Email</label>
+          </div>
+
+          <div class="billing2 content inputs">
+            <input type="text" name="CompanyName" />
+            <input type="text" name="City" required />
+            <input type="text" name="Country" required />
+            <input type="number" name="Phone" />
+            <input type="email" name="Email" required />
+          </div>
+        </div>
+      </section>
+
+      <div class="total" id="required">
+        <p><sup>*</sup>Required</p>
+      </div>
+
+      <section id="Billing">
+        <div class="billing-name">
+          <p>Deliver To a different address</p>
+        </div>
+
+        <div class="billing-container">
+          <div class="billing-name1 content labels">
+            <label for="Name2">Name(First/Last)</label>
+            <label for="District/City">District/City</label>
+            <label for="Whatsapp">Whatsapp</label>
+            <label for="Deliver-time">Deliver-time</label>
+            <label for="Comments">Comments</label>
+          </div>
+
+          <div class="billing1 content inputs">
+            <input type="text" name="Name2" required />
+            <input type="text" name="District/City" required />
+            <input type="text" name="Whatsapp" />
+            <input type="time" name="Deliver-time" />
+            <input type="text" name="Comments" />
+          </div>
+
+          <div class="billing-name2 content labels">
+            <label for="Address2">Address</label>
+            <label for="Phone2">Phone</label>
+            <label for="DeliverDate">Deliver Date</label>
+            <label for="MessageOnCard">Message On Card</label>
+          </div>
+
+          <div class="billing2 content inputs">
+            <input type="text" name="Address2" required />
+            <input type="number" name="Phone2" required />
+            <input type="text" name="DeliverDate" required />
+            <input type="text" name="MessageOnCard" required />
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

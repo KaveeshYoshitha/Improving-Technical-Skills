@@ -1,0 +1,10 @@
+C:\Users\Kaveesh\Desktop\NIBM\GUI\Exercises\Salary  Calculater\Salary  Calculater\bin\Debug\Salary  Calculater.exe.config
+C:\Users\Kaveesh\Desktop\NIBM\GUI\Exercises\Salary  Calculater\Salary  Calculater\bin\Debug\Salary  Calculater.exe
+C:\Users\Kaveesh\Desktop\NIBM\GUI\Exercises\Salary  Calculater\Salary  Calculater\bin\Debug\Salary  Calculater.pdb
+C:\Users\Kaveesh\Desktop\NIBM\GUI\Exercises\Salary  Calculater\Salary  Calculater\obj\Debug\Salary  Calculater.csproj.AssemblyReference.cache
+C:\Users\Kaveesh\Desktop\NIBM\GUI\Exercises\Salary  Calculater\Salary  Calculater\obj\Debug\Salary__Calculater.FormCalculateNetSalary.resources
+C:\Users\Kaveesh\Desktop\NIBM\GUI\Exercises\Salary  Calculater\Salary  Calculater\obj\Debug\Salary__Calculater.Properties.Resources.resources
+C:\Users\Kaveesh\Desktop\NIBM\GUI\Exercises\Salary  Calculater\Salary  Calculater\obj\Debug\Salary  Calculater.csproj.GenerateResource.cache
+C:\Users\Kaveesh\Desktop\NIBM\GUI\Exercises\Salary  Calculater\Salary  Calculater\obj\Debug\Salary  Calculater.csproj.CoreCompileInputs.cache
+C:\Users\Kaveesh\Desktop\NIBM\GUI\Exercises\Salary  Calculater\Salary  Calculater\obj\Debug\Salary  Calculater.exe
+C:\Users\Kaveesh\Desktop\NIBM\GUI\Exercises\Salary  Calculater\Salary  Calculater\obj\Debug\Salary  Calculater.pdb

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Salary Calculator</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <label for="EmpNo">Emp No:</label>
+    <input type="text" name="EmpNo" placeholder="Enter Employee No" />
+
+    <label for="Name">Name:</label>
+    <input type="text" name="Name" />
+
+    <label for="male">Male</label>
+    <input type="radio" name="gender" id="male" value="male" />
+
+    <label for="female">Female</label>
+    <input type="radio" name="gender" id="female" value="female" />
+
+    <label for="empPost">Employee Post:</label>
+    <select id="empPost">
+      <option value="Manager">Manager</option>
+      <option value="Cleark">Clerk</option>
+      <option value="Staff">Staff</option>
+    </select>
+
+    <label for="EmpStatus">Employee Status:</label>
+    <input type="checkbox" id="EmpStatus" />
+
+    <label for="BSal">Basic Salary:</label>
+    <input type="text" id="BSal" />
+
+    <button onclick="salaryCalculate()">Calculate Salary</button>
+
+    <label for="Allowance">Allowance:</label>
+    <input type="text" id="Allowance" readonly />
+
+    <label for="epf">EPF:</label>
+    <input type="text" id="epf" readonly />
+
+    <label for="etf">ETF:</label>
+    <input type="text" id="etf" readonly />
+
+    <label for="NSal">Net Salary:</label>
+    <input type="text" id="NSal" readonly />
+
+    <script src="script.js"></script>
+  </body>
+</html>

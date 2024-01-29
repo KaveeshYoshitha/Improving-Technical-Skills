@@ -1,0 +1,46 @@
+div {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 10px 30px 30px 30px;
+  padding: 10px 20px 20px 20px;
+}
+
+button {
+  margin: 10px 30px 30px 40px;
+}
+
+section {
+  border: 2px solid black;
+}
+
+h1,
+h2 {
+  padding: 35px;
+}
+h1 {
+  padding-top: 5px;
+  margin-top: 5px;
+  padding-bottom: 15px;
+  font-size: 30pt;
+}
+h2 {
+  padding-top: 0px;
+}
+
+label {
+  margin-right: 40px;
+}
+
+/* .container {
+  display: flex;
+}
+#rules,
+#errors {
+  flex: 1;
+  width: 50%;
+}
+
+#errors {
+  background-color: red;
+} */

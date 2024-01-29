@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body id="body">
+    <h1
+      id="title"
+      style="display: flex; align-items: center; justify-content: center"
+    >
+      My Heading
+    </h1>
+    <button
+      onclick="change()"
+      id="btn1"
+      style="
+        width: 100px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      Click Me
+    </button>
+
+    <script>
+      function change() {
+        let body = document.getElementById("body");
+        let title = document.getElementById("title");
+
+        body.style.backgroundImage = "url(batman.jpg)";
+        title.style.color = "blue";
+        title.innerText = "I'm Batman";
+        title.style.fontFamily = "Arial";
+      }
+    </script>
+  </body>
+</html>

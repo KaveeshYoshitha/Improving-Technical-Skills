@@ -1,0 +1,91 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#total {
+  background-color: white;
+  text-align: right;
+  height: 30px;
+}
+#required {
+  background-color: white;
+  text-align: left;
+  height: 30px;
+  padding: 3px;
+}
+
+#Billing {
+  background-color: #5cfad8;
+  height: 50vh;
+}
+.billing-name {
+  padding: 8px;
+  margin-bottom: 4px;
+  font-size: 20px;
+}
+#radio {
+  margin: 0;
+  width: auto;
+}
+.billing-container {
+  display: flex;
+  height: 100%;
+  max-height: 44.2vh;
+}
+
+.billing1 {
+  width: 40%;
+  height: 88%;
+  /* background-color: rgb(208, 36, 145); */
+}
+.billing2 {
+  width: 40%;
+  height: 88%;
+  /* background-color: rgb(231, 128, 128); */
+}
+
+.billing-name1 {
+  width: 10%;
+  height: 88%;
+  /* background-color: rgb(125, 252, 152); */
+}
+.billing-name2 {
+  width: 10%;
+  height: 88%;
+  /* background-color: rgb(213, 252, 140); */
+}
+
+.content {
+  height: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  line-height: 60px;
+}
+
+input {
+  margin: 20px;
+  width: 400px;
+  height: 30px;
+}
+
+.labels {
+  padding-left: 60px;
+  margin-left: 40px;
+}
+
+/* label {
+  margin: 30px;
+}
+
+input {
+  display: inline;
+  margin: 30px;
+  width: 60%;
+  margin-right: 100px;
+}
+#cellPhone {
+  margin-right: 200px;
+} */

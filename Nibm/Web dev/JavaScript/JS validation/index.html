@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wisdom Computer School</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <section>
+      <!-- <div class="container"> -->
+      <!-- <div id="rules"> -->
+      <h1>Wisdom Computer School</h1>
+
+      <h2 style="text-decoration: underline">Course Refund Request Form</h2>
+      <div>
+        <label id="nameLabel" for="Name">Name: </label>
+        <input type="text" name="Name" id="name" />
+      </div>
+      <div>
+        <label id="addressLabel" for="Address">Address: </label>
+        <input type="text" name="Address" id="address" />
+      </div>
+      <div>
+        <label id="courseNoLabel" for="CourseNo">Course No: </label>
+        <input type="text" name="CourseNo" id="courseNo" />
+      </div>
+      <div>
+        <label id="reasonLabel" for="reason">Reason for withdraw: </label>
+        <select name="reason" id="reason">
+          <option value="" disabled selected>Select a reason</option>
+          <option value="Personal">Personal reason</option>
+          <option value="Medical">Medical reason</option>
+          <option value="Time">Unavailability of time</option>
+        </select>
+      </div>
+      <div>
+        <label id="moneyTypeLabel" for="moneyType"
+          >I would like my refund in the form of:
+        </label>
+        <input type="radio" name="moneyType" value="Cash" id="cash" /> Cash
+        <input type="radio" name="moneyType" value="Cheque" id="cheque" />
+        Cheque
+      </div>
+      <div>
+        <label id="policyLabel" for="policy"
+          >I agree to the refund policy of this institute</label
+        >
+        <input type="checkbox" id="policy" />
+      </div>
+
+      <button onclick="checkFunction()">Send</button>
+      <button>Cancel</button>
+      <!-- </div> -->
+      <!-- <div id="errors"></div> -->
+      <!-- </div> -->
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student mark Calculator</title>
+  </head>
+  <body>
+    <script>
+      //   var stuNo = "S100";
+      //   var stuName = "Kaveesh";
+      //   var scienceMark = 100;
+      //   var mathsMark = 100;
+      //   var englishmark = 100;
+      //   var avg = (mathsMark + englishmark + scienceMark) / 3;
+      //   var grade = "";
+
+      //   if (avg < 30) {
+      //     grade = "F";
+      //   } else if (avg < 50) {
+      //     grade = "S";
+      //   } else if (avg < 70) {
+      //     grade = "C";
+      //   } else {
+      //     grade = "D";
+      //   }
+
+      //   document.write(grade);
+
+      const student = [
+        {
+          stuNo: S100,
+          stuName: "Kaveesh",
+          scienceMark: 100,
+          mathsMark: 100,
+          englishmark: 100,
+        },
+      ];
+      const avg =
+        (student[0].englishmark +
+          student[0].mathsMark +
+          student[0].scienceMark) /
+        3;
+      const grade = "";
+      calGrade(avg);
+
+      if (avg < 30) {
+        grade = "F";
+      } else if (avg < 50) {
+        grade = "S";
+      } else if (avg < 70) {
+        grade = "C";
+      } else {
+        grade = "D";
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,10 @@
+C:\Users\Kaveesh\Desktop\NIBM\GUI\Exercises\Calculate Electricity Bill\Calculate Electricity Bill\bin\Debug\Calculate Electricity Bill.exe.config
+C:\Users\Kaveesh\Desktop\NIBM\GUI\Exercises\Calculate Electricity Bill\Calculate Electricity Bill\bin\Debug\Calculate Electricity Bill.exe
+C:\Users\Kaveesh\Desktop\NIBM\GUI\Exercises\Calculate Electricity Bill\Calculate Electricity Bill\bin\Debug\Calculate Electricity Bill.pdb
+C:\Users\Kaveesh\Desktop\NIBM\GUI\Exercises\Calculate Electricity Bill\Calculate Electricity Bill\obj\Debug\Calculate Electricity Bill.csproj.AssemblyReference.cache
+C:\Users\Kaveesh\Desktop\NIBM\GUI\Exercises\Calculate Electricity Bill\Calculate Electricity Bill\obj\Debug\Calculate_Electricity_Bill.FormECBill.resources
+C:\Users\Kaveesh\Desktop\NIBM\GUI\Exercises\Calculate Electricity Bill\Calculate Electricity Bill\obj\Debug\Calculate_Electricity_Bill.Properties.Resources.resources
+C:\Users\Kaveesh\Desktop\NIBM\GUI\Exercises\Calculate Electricity Bill\Calculate Electricity Bill\obj\Debug\Calculate Electricity Bill.csproj.GenerateResource.cache
+C:\Users\Kaveesh\Desktop\NIBM\GUI\Exercises\Calculate Electricity Bill\Calculate Electricity Bill\obj\Debug\Calculate Electricity Bill.csproj.CoreCompileInputs.cache
+C:\Users\Kaveesh\Desktop\NIBM\GUI\Exercises\Calculate Electricity Bill\Calculate Electricity Bill\obj\Debug\Calculate Electricity Bill.exe
+C:\Users\Kaveesh\Desktop\NIBM\GUI\Exercises\Calculate Electricity Bill\Calculate Electricity Bill\obj\Debug\Calculate Electricity Bill.pdb
