@@ -2,11 +2,13 @@ package MTB;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.ResultSet;
+
 
 public class login extends JFrame implements ActionListener {
 
-    private JTextField usernameField;
-    private JPasswordField passwordField;
+    public JTextField usernameField;
+    public JPasswordField passwordField;
 
     public login() {
         // JFrame
@@ -112,12 +114,45 @@ public class login extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String username = usernameField.getText();
-        char[] password = passwordField.getPassword();
-        // Add your login logic here
-        // For example, you can check the credentials against a predefined username and password
+        String enteredUsername = usernameField.getText().trim();
+        char[] enteredPassword = passwordField.getPassword();
+
+        try {
+            String query = "SELECT * FROM Adminn WHERE AID = '" + enteredUsername + "'";
+
+            ResultSet resultSet = new dbConnection().executeQuery(query);
+
+            if (resultSet != null && resultSet.next()) {
+                String storedPassword = resultSet.getString("APassword").trim();
+
+                System.out.println("Entered Password: " + new String(enteredPassword));
+                System.out.println("Stored Password: " + storedPassword);
+
+                if (new String(enteredPassword).equals(storedPassword)) {
+                    setVisible(false);
+                    JOptionPane.showMessageDialog(null, "Login");
+
+                    dashboard dashboard = new dashboard();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Invalid Login");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Invalid Login");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+
 
     }
+
+
+
+
+
+
+
 
     public static void main(String[] args) {
         login l1 = new login();
