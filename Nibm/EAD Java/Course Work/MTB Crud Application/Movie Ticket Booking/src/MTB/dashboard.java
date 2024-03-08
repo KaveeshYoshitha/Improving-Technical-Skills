@@ -31,7 +31,13 @@ public class dashboard extends JFrame implements ActionListener {
         dashboardBtn.setBackground(new Color(33, 38, 45));
         dashboardBtn.setFont(new Font("Montserrat", Font.BOLD, 30));
         dashboardBtn.setFocusable(false);
-        dashboardBtn.addActionListener(this);
+        dashboardBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                performDashboard();
+            }
+        });
+
 
         JButton addBtn = new JButton("Add");
         addBtn.setPreferredSize(new Dimension(220, 60));
@@ -73,7 +79,14 @@ public class dashboard extends JFrame implements ActionListener {
             movieButton.setBackground(new Color(33, 38, 45));
             movieButton.setFont(new Font("Montserrat", Font.BOLD, 30));
             movieButton.setFocusable(false);
-            movieButton.addActionListener(this);
+            movieButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    selectMovie();
+                }
+            });
+
+
 
             JPanel cardPanel = new JPanel(new BorderLayout());
             cardPanel.add(new JLabel(moviePoster), BorderLayout.CENTER);
@@ -90,6 +103,16 @@ public class dashboard extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         // Handle button clicks if needed
+    }
+
+    private void performDashboard() {
+        dispose();
+        new dashboard();
+    }
+
+    private void selectMovie() {
+        dispose();
+        new SeatBooking();
     }
 
     public static void main(String[] args) {

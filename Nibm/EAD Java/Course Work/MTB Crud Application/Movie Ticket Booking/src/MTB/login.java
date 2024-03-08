@@ -5,10 +5,36 @@ import java.awt.event.*;
 import java.sql.ResultSet;
 
 
-public class login extends JFrame implements ActionListener {
+//import MTB.connection.DatabaseConnection;
+import com.mysql.cj.jdbc.JdbcConnection;
 
-    public JTextField usernameField;
-    public JPasswordField passwordField;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.*;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+
+
+
+public class login extends JFrame  {
+
+    private JTextField usernameField;
+    private JPasswordField passwordField;
+
+    public static final String JDBC_URL = "jdbc:mysql://localhost:3306/cinema";
+    public static final String USERNAME = "root";
+    public static final String PASSWORD = "root";
+
+
 
     public login() {
         // JFrame
@@ -50,7 +76,15 @@ public class login extends JFrame implements ActionListener {
         loginButton.setFont(new Font("Montserrat", Font.BOLD, 30));
         loginButton.setFocusable(false);
 
-        loginButton.addActionListener(this);
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                performLogin();
+            }
+        });
+
+
+//        loginButton.addActionListener(this);
 
         // Panel1
         JPanel panel1 = new JPanel() {
@@ -112,38 +146,23 @@ public class login extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        String enteredUsername = usernameField.getText().trim();
-        char[] enteredPassword = passwordField.getPassword();
 
-        try {
-            String query = "SELECT * FROM Adminn WHERE AID = '" + enteredUsername + "'";
 
-            ResultSet resultSet = new dbConnection().executeQuery(query);
 
-            if (resultSet != null && resultSet.next()) {
-                String storedPassword = resultSet.getString("APassword").trim();
+    private void performLogin(){
 
-                System.out.println("Entered Password: " + new String(enteredPassword));
-                System.out.println("Stored Password: " + storedPassword);
+        String username = usernameField.getText().trim();
+        char[] password = passwordField.getPassword();
 
-                if (new String(enteredPassword).equals(storedPassword)) {
-                    setVisible(false);
-                    JOptionPane.showMessageDialog(null, "Login");
+        if (authenticateUser(username, new String(password))) {
+            System.out.println("Login successful for: " + username);
+            dispose();
+            new dashboard();
 
-                    dashboard dashboard = new dashboard();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Invalid Login");
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Invalid Login");
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } else {
+            JOptionPane.showMessageDialog(this, "Login failed. Invalid credentials.");
+            System.out.println("Login failed. Invalid credentials.");
         }
-
-
 
     }
 
@@ -152,9 +171,31 @@ public class login extends JFrame implements ActionListener {
 
 
 
+    private boolean authenticateUser(String username, String password) {
+        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD)) {
+            String query = "SELECT * FROM cinema.adminn WHERE AID = ? AND APassword = ?";
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setString(1, username);
+                statement.setString(2, password);
 
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    return resultSet.next();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     public static void main(String[] args) {
-        login l1 = new login();
+//        login l1 = new login();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new login();
+            }
+        });
+
     }
 }

@@ -30,7 +30,13 @@ public class food extends JFrame implements ActionListener {
         nextBtn.setBackground(new Color(33, 38, 45));
         nextBtn.setFont(new Font("Montserrat", Font.BOLD, 30));
         nextBtn.setFocusable(false);
-        nextBtn.addActionListener(this);
+        nextBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                performNext();
+            }
+        });
+
 
         JButton backBtn = new JButton("Back");
         backBtn.setPreferredSize(new Dimension(220, 60));
@@ -38,6 +44,12 @@ public class food extends JFrame implements ActionListener {
         backBtn.setBackground(new Color(33, 38, 45));
         backBtn.setFont(new Font("Montserrat", Font.BOLD, 30));
         backBtn.setFocusable(false);
+        backBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                performBack();
+            }
+        });
 
         // Panel1
         JPanel panel1 = new JPanel(new GridBagLayout()) {
@@ -87,6 +99,17 @@ public class food extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         // Handle button clicks if needed
+    }
+
+
+    public void performBack() {
+        dispose();
+        new SeatBooking();
+    }
+
+    public void performNext() {
+        dispose();
+        new Payment();
     }
 
     public static void main(String[] args) {

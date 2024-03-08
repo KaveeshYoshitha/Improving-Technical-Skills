@@ -31,7 +31,13 @@ public class SeatBooking extends JFrame implements ActionListener {
         nextBtn.setBackground(new Color(33, 38, 45));
         nextBtn.setFont(new Font("Montserrat", Font.BOLD, 30));
         nextBtn.setFocusable(false);
-        nextBtn.addActionListener(this);
+        nextBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                performNext();
+            }
+        });
+
 
         backBtn = new JButton("Back");
         backBtn.setPreferredSize(new Dimension(220, 60));
@@ -39,7 +45,12 @@ public class SeatBooking extends JFrame implements ActionListener {
         backBtn.setBackground(new Color(33, 38, 45));
         backBtn.setFont(new Font("Montserrat", Font.BOLD, 30));
         backBtn.setFocusable(false);
-        backBtn.addActionListener(this);
+        backBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                performBack();
+            }
+        });
 
         JLabel setAmountLabel = new JLabel("Enter the amount of seats you want to book: ");
         setAmountLabel.setFont(new Font("Montserrat", Font.PLAIN, 35));
@@ -95,17 +106,25 @@ public class SeatBooking extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+
+    public void performNext() {
+        dispose();
+        new food();
+    }
+
+    public void performBack() {
+        dispose();
+        new dashboard();
+    }
+
+
     public static void main(String[] args) {
         SeatBooking seatBooking = new SeatBooking();
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // Handle button clicks here
-        if (e.getSource() == nextBtn) {
-            // Add your logic for the "Next" button
-        } else if (e.getSource() == backBtn) {
-            // Add your logic for the "Back" button
-        }
-    }
 }
