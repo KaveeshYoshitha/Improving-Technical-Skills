@@ -38,7 +38,7 @@ public class login extends JFrame  {
 
     public login() {
         // JFrame
-        setTitle("Login");
+        setTitle("MovieHub");
         setSize(1500, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);

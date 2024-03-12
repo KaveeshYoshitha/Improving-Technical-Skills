@@ -107,7 +107,7 @@ public class Add extends JFrame {
 
     public Add() {
         // JFrame
-        setTitle("Admin");
+        setTitle("MovieHub");
         setSize(1500, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -145,6 +145,19 @@ public class Add extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 performAdd();
+            }
+        });
+
+        JButton viewBtn = new JButton("View");
+        viewBtn.setPreferredSize(new Dimension(220, 60));
+        viewBtn.setForeground(Color.WHITE);
+        viewBtn.setBackground(new Color(33, 38, 45));
+        viewBtn.setFont(new Font("Montserrat", Font.BOLD, 30));
+        viewBtn.setFocusable(false);
+        viewBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                performView();
             }
         });
 
@@ -195,6 +208,9 @@ public class Add extends JFrame {
         gbc.gridy = 2;
         panel1.add(addBtn, gbc);
 
+        gbc.gridy = 3;
+        panel1.add(viewBtn, gbc);
+
         JPanel panel2 = new JPanel(new GridLayout(2, 1, 20, 20)){
             @Override
             protected void paintComponent(Graphics g) {
@@ -221,6 +237,11 @@ public class Add extends JFrame {
     private void performAdd() {
         dispose();
         new Add();
+    }
+
+    private void performView() {
+        dispose();
+        new view();
     }
 
     private void perfomAddMovie() {

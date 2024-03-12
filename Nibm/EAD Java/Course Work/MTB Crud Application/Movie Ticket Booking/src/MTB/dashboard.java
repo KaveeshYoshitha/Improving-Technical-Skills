@@ -9,7 +9,7 @@ public class dashboard extends JFrame implements ActionListener {
 
     public dashboard() {
         // JFrame
-        setTitle("Dashboard");
+        setTitle("MovieHub");
         setSize(1500, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -120,7 +120,7 @@ public class dashboard extends JFrame implements ActionListener {
                     movieButton.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            selectMovie();
+                            selectMovie(movieName);
                         }
                     });
 
@@ -169,7 +169,7 @@ public class dashboard extends JFrame implements ActionListener {
         new view();
     }
 
-    private void selectMovie() {
+    private void selectMovie(String movieName) {
         dispose();
         new SeatBooking();
     }

@@ -19,7 +19,7 @@ public class AddMovie extends JFrame {
 
     public AddMovie() {
         // JFrame
-        setTitle("Add Movie");
+        setTitle("MovieHub");
         setSize(1500, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -197,7 +197,7 @@ public class AddMovie extends JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Adding failed for: " + movieName);
         }
-        addMovieToDB(movieName, movieID, moviePoster, adminID);
+//        addMovieToDB(movieName, movieID, moviePoster, adminID);
 
 
     }

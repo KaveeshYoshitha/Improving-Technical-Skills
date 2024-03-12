@@ -1,9 +1,15 @@
 package MTB;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class SeatBooking extends JFrame implements ActionListener {
+    String movieName;
     private JTextField seatAmountField;
     private JTextField cusNameField;
     private JButton nextBtn;
@@ -11,7 +17,7 @@ public class SeatBooking extends JFrame implements ActionListener {
 
     public SeatBooking() {
         // JFrame
-        setTitle("Seat Booking");
+        setTitle("MovieHub");
         setSize(1500, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -38,7 +44,6 @@ public class SeatBooking extends JFrame implements ActionListener {
                 performNext();
             }
         });
-
 
         backBtn = new JButton("Back");
         backBtn.setPreferredSize(new Dimension(220, 60));
@@ -68,7 +73,6 @@ public class SeatBooking extends JFrame implements ActionListener {
         cusNameField.setFont(new Font("Montserrat", Font.PLAIN, 30));
         cusNameField.setPreferredSize(new Dimension(200, 30));
         cusNameField.setForeground(Color.BLACK);
-
 
         JPanel panel1 = new JPanel(new GridBagLayout()) {
             @Override
@@ -113,7 +117,6 @@ public class SeatBooking extends JFrame implements ActionListener {
         gbc.gridy = 1;
         panel1.add(seatAmountField, gbc);
 
-
         panel3.add(backBtn, BorderLayout.WEST);
         panel3.add(nextBtn, BorderLayout.EAST);
 
@@ -125,15 +128,61 @@ public class SeatBooking extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-
     @Override
     public void actionPerformed(ActionEvent e) {
-
+//        if (e.getSource() == nextBtn) {
+//            performNext();
+//        }
     }
 
     public void performNext() {
-        dispose();
-        new food();
+
+        String customerName = cusNameField.getText();
+        String seatAmount = seatAmountField.getText();
+
+        // Validate input
+        if (customerName.isEmpty() || seatAmount.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter both name and seat amount.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Parse seat amount as an integer
+        int seatQuantity;
+        try {
+            seatQuantity = Integer.parseInt(seatAmount);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Invalid seat amount. Please enter a valid number.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Insert data into database
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cinema", "root", "root")) {
+            // Insert into customer table
+            String customerQuery = "INSERT INTO customer (userName) VALUES (?)";
+            try (PreparedStatement customerStatement = connection.prepareStatement(customerQuery)) {
+                customerStatement.setString(1, customerName);
+                customerStatement.executeUpdate();
+            }
+
+            // Insert into seat table
+            String seatQuery = "INSERT INTO seat (sQuantity, userName) VALUES (?, ?)";
+            try (PreparedStatement seatStatement = connection.prepareStatement(seatQuery)) {
+                seatStatement.setInt(1, seatQuantity);
+                seatStatement.setString(2, customerName);
+                seatStatement.executeUpdate();
+            }
+
+
+            // Proceed to the next frame (you can customize this part based on your application)
+            dispose();
+//            new food();
+            new Payment(customerName);
+
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "An error occurred. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void performBack() {
@@ -142,8 +191,8 @@ public class SeatBooking extends JFrame implements ActionListener {
     }
 
 
-    public static void main(String[] args) {
-        SeatBooking seatBooking = new SeatBooking();
-    }
 
+    public static void main(String[] args) {
+//        SwingUtilities.invokeLater(() -> new SeatBooking());
+    }
 }

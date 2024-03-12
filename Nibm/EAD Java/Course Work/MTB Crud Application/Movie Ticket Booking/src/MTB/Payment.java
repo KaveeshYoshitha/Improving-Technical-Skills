@@ -4,12 +4,28 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Payment extends JFrame implements ActionListener {
 
-    public Payment() {
+    private JLabel sAmountLabel;
+    private JLabel sPriceLabel;
+
+    private JLabel billLabel;
+
+    private String cusName;
+
+    private String movieName;
+
+    public Payment(String cusName) {
+        this.cusName = cusName;
+
         // JFrame
-        setTitle("Payment");
+        setTitle("MovieHub");
         setSize(1500, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -65,7 +81,6 @@ public class Payment extends JFrame implements ActionListener {
         panel1.add(titleLabel, gbc);
 
         // Panel2
-//        JPanel panel2 = new JPanel(new BorderLayout());
         JPanel panel2 = new JPanel(new BorderLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
@@ -74,7 +89,7 @@ public class Payment extends JFrame implements ActionListener {
             }
         };
 
-        JPanel panel3 = new JPanel(new GridLayout(5,4,20, 20)) {
+        JPanel panel3 = new JPanel(new GridLayout(3, 3, 20, 20)) {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -90,73 +105,27 @@ public class Payment extends JFrame implements ActionListener {
         amountLabel.setFont(new Font("Montserrat", Font.PLAIN, 35));
         amountLabel.setForeground(Color.WHITE);
 
-
-        JLabel idLabel = new JLabel("Id");
-        idLabel.setFont(new Font("Montserrat", Font.PLAIN, 35));
-        idLabel.setForeground(Color.WHITE);
-
-
         JLabel priceLabel = new JLabel("Price");
         priceLabel.setFont(new Font("Montserrat", Font.PLAIN, 35));
         priceLabel.setForeground(Color.WHITE);
 
-        //Seat-----------------------------------------------------------
-
+//        seat----------------------------------------------
         JLabel seatLabel = new JLabel("Seat");
         seatLabel.setFont(new Font("Montserrat", Font.PLAIN, 35));
         seatLabel.setForeground(Color.WHITE);
 
-        JLabel sIdLabel = new JLabel();
-        sIdLabel.setFont(new Font("Montserrat", Font.PLAIN, 35));
-        sIdLabel.setForeground(Color.WHITE);
-
-        JLabel sAmountLabel = new JLabel();
+        sAmountLabel = new JLabel();
         sAmountLabel.setFont(new Font("Montserrat", Font.PLAIN, 35));
         sAmountLabel.setForeground(Color.WHITE);
 
-        JLabel sPriceLabel = new JLabel();
+        sPriceLabel = new JLabel();
         sPriceLabel.setFont(new Font("Montserrat", Font.PLAIN, 35));
         sPriceLabel.setForeground(Color.WHITE);
 
-        //seat-----------------------------------------------------------
-        //Food-----------------------------------------------------------
+//        seat------------------------------------------------
 
-        JLabel foodLabel = new JLabel("Food");
-        foodLabel.setFont(new Font("Montserrat", Font.PLAIN, 35));
-        foodLabel.setForeground(Color.WHITE);
+//        totbill-----------------------------------------------
 
-        JLabel fIdLabel = new JLabel();
-        fIdLabel.setFont(new Font("Montserrat", Font.PLAIN, 35));
-        fIdLabel.setForeground(Color.WHITE);
-
-        JLabel fAmountLabel = new JLabel();
-        fAmountLabel.setFont(new Font("Montserrat", Font.PLAIN, 35));
-        fAmountLabel.setForeground(Color.WHITE);
-
-        JLabel fPriceLabel = new JLabel();
-        fPriceLabel.setFont(new Font("Montserrat", Font.PLAIN, 35));
-        fPriceLabel.setForeground(Color.WHITE);
-
-        //Food-----------------------------------------------------------
-        //Tax-----------------------------------------------------------
-        JLabel taxLabel = new JLabel("Tax");
-        taxLabel.setFont(new Font("Montserrat", Font.PLAIN, 35));
-        taxLabel.setForeground(Color.WHITE);
-
-        JLabel tIdaLabel = new JLabel();
-        tIdaLabel.setFont(new Font("Montserrat", Font.PLAIN, 35));
-        tIdaLabel.setForeground(Color.WHITE);
-
-        JLabel tAmountLabel = new JLabel();
-        tAmountLabel.setFont(new Font("Montserrat", Font.PLAIN, 35));
-        tAmountLabel.setForeground(Color.WHITE);
-
-        JLabel tPriceLabel = new JLabel();
-        tPriceLabel.setFont(new Font("Montserrat", Font.PLAIN, 35));
-        tPriceLabel.setForeground(Color.WHITE);
-
-        //Tax-----------------------------------------------------------
-        //final bill-----------------------------------------------------------
         JLabel totalLabel = new JLabel("Total");
         totalLabel.setFont(new Font("Montserrat", Font.PLAIN, 45));
         totalLabel.setForeground(Color.WHITE);
@@ -165,46 +134,20 @@ public class Payment extends JFrame implements ActionListener {
         blankLabel.setFont(new Font("Montserrat", Font.PLAIN, 35));
         blankLabel.setForeground(Color.WHITE);
 
-        JLabel blankLabel2 = new JLabel();
-        blankLabel.setFont(new Font("Montserrat", Font.PLAIN, 35));
-        blankLabel.setForeground(Color.WHITE);
-
-        JLabel billLabel = new JLabel();
+        billLabel = new JLabel();
         billLabel.setFont(new Font("Montserrat", Font.PLAIN, 45));
         billLabel.setForeground(Color.WHITE);
-
-        //final bill-----------------------------------------------------------
-
+//        totbill----------------------------------------------------
 
         panel3.add(blankLabel);
         panel3.add(amountLabel);
-        panel3.add(idLabel);
         panel3.add(priceLabel);
         panel3.add(seatLabel);
         panel3.add(sAmountLabel);
-        panel3.add(sIdLabel);
         panel3.add(sPriceLabel);
-        panel3.add(foodLabel);
-        panel3.add(fAmountLabel);
-        panel3.add(fIdLabel);
-        panel3.add(fPriceLabel);
-        panel3.add(taxLabel);
-        panel3.add(tAmountLabel);
-        panel3.add(tIdaLabel);
-        panel3.add(tPriceLabel);
         panel3.add(totalLabel);
         panel3.add(blankLabel1);
-        panel3.add(blankLabel2);
         panel3.add(billLabel);
-
-
-
-
-
-
-
-
-
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         buttonPanel.add(backBtn);
@@ -219,8 +162,38 @@ public class Payment extends JFrame implements ActionListener {
         add(panel2, BorderLayout.SOUTH);
         add(panel3, BorderLayout.CENTER);
 
+        // Fetch seat data from the database and update labels
+        updateSeatLabels();
+
         // Set frame visible
         setVisible(true);
+
+
+
+    }
+
+    private void updateSeatLabels() {
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cinema", "root", "root")) {
+            String query = "SELECT sQuantity FROM seat LIMIT 1";  // Assuming you have only one row in the seat table
+            try (PreparedStatement statement = connection.prepareStatement(query);
+                 ResultSet resultSet = statement.executeQuery()) {
+
+                if (resultSet.next()) {
+                    int sQuantity = resultSet.getInt("sQuantity");
+
+                    // Set sAmountLabel text
+                    sAmountLabel.setText(String.valueOf(sQuantity));
+
+                    // Calculate and set sPriceLabel text
+                    int totalPrice = sQuantity * 200; //Assuming price is 200
+                    sPriceLabel.setText(String.valueOf(totalPrice));
+                    billLabel.setText(String.valueOf(totalPrice));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Failed to fetch seat data.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     @Override
@@ -230,16 +203,53 @@ public class Payment extends JFrame implements ActionListener {
 
     private void performBack() {
         dispose();
-        new food();
+        new SeatBooking();
     }
+
+
+
 
     private void performPay() {
-        JOptionPane.showMessageDialog(this, "Payment Successful!");
-        dispose();
-        new dashboard();
+            // Assuming you have the username and movie name from previous panels
+            String userName = cusName;  // Replace with actual username
+        // ch the total bill from the billLabel
+
+            int totalBill = Integer.parseInt(billLabel.getText());
+
+            // Save payment details to the database
+            try (Connection connection001 = DriverManager.getConnection("jdbc:mysql://localhost:3306/cinema", "root", "root")) {
+                String query = "INSERT INTO cinema.pay(userName,amount) VALUES (?, ?)";
+                try (PreparedStatement statement = connection001.prepareStatement(query)) {
+                    statement.setString(1, cusName);
+                    statement.setInt(2, totalBill);
+                    statement.executeUpdate();
+                }
+
+                JOptionPane.showMessageDialog(this, "Payment Successful!");
+
+                // Close the payment window and navigate to the dashboard
+                dispose();
+                new dashboard();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Failed to save payment details.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+
     }
 
+    public class SharedData {
+        public static String username;
+    }
+
+
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(Payment::new);
+        SwingUtilities.invokeLater(() -> {
+            // Prompt the user for the username (you might want to get it from your SeatBooking frame)
+//            String cusName = JOptionPane.showInputDialog("Enter username:");
+
+            // Create an instance of Payment with the provided username
+//            new Payment(cusName);
+        });
     }
 }

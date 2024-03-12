@@ -4,11 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.*;
 
 public class AddHall extends JFrame implements ActionListener {
 
+    JTextField hallIDField;
+    JTextField adminIDField;
     public AddHall() {
-        setTitle("Add Hall");
+        setTitle("MovieHub");
         setSize(1500, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -25,7 +28,7 @@ public class AddHall extends JFrame implements ActionListener {
         JLabel hallIDLabel = new JLabel("Hall ID : ");
         hallIDLabel.setFont(new Font("Montserrat", Font.PLAIN, 35));
         hallIDLabel.setForeground(Color.WHITE);
-        JTextField hallIDField = new JTextField();
+        hallIDField = new JTextField();
         hallIDField.setFont(new Font("Montserrat", Font.PLAIN, 30));
         hallIDField.setPreferredSize(new Dimension(200, 30));
         hallIDField.setForeground(Color.BLACK);
@@ -34,7 +37,7 @@ public class AddHall extends JFrame implements ActionListener {
         JLabel adminIDLabel = new JLabel("Admin ID : ");
         adminIDLabel.setFont(new Font("Montserrat", Font.PLAIN, 35));
         adminIDLabel.setForeground(Color.WHITE);
-        JTextField adminIDField = new JTextField();
+        adminIDField = new JTextField();
         adminIDField.setFont(new Font("Montserrat", Font.PLAIN, 30));
         adminIDField.setPreferredSize(new Dimension(200, 30));
         adminIDField.setForeground(Color.BLACK);
@@ -45,6 +48,12 @@ public class AddHall extends JFrame implements ActionListener {
         addHallButton.setBackground(new Color(33, 38, 45));
         addHallButton.setFont(new Font("Montserrat", Font.BOLD, 30));
         addHallButton.setFocusable(false);
+        addHallButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                performAdd();
+            }
+        });
 
         JButton backBtn = new JButton("Back");
         backBtn.setPreferredSize(new Dimension(220, 60));
@@ -111,6 +120,71 @@ public class AddHall extends JFrame implements ActionListener {
         dispose();
         new Add();
     }
+
+    private void performAdd() {
+        String hallID = hallIDField.getText().trim();
+        String adminID = adminIDField.getText().trim();
+
+        // Validate input
+        if (hallID.isEmpty() || adminID.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in all the fields");
+            return;
+        }
+
+        if (addHallToDB(hallID, adminID)) {
+            JOptionPane.showMessageDialog(this, "Hall Added Successfully");
+            dispose();
+            new Add();
+        } else {
+            JOptionPane.showMessageDialog(this, "Adding failed for: " + hallID);
+        }
+
+        // Insert data into the database
+//        try (dbConnection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cinema", "root", "root")) {
+//            String query = "INSERT INTO hall (hallID, adminID) VALUES (?, ?)";
+//            try (PreparedStatement statement = connection.prepareStatement(query)) {
+//                statement.setString(1, hallID);
+//                statement.setString(2, adminID);
+//                statement.executeUpdate();
+//            }
+//
+//            // Display success message
+//            JOptionPane.showMessageDialog(this, "Hall added successfully!");
+//
+//            // Close the current frame
+//            dispose();
+//        } catch (SQLException ex) {
+//            ex.printStackTrace();
+//            JOptionPane.showMessageDialog(this, "Failed to add hall. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+//        }
+    }
+
+    private boolean addHallToDB(String hallID, String adminID) {
+        dbConnection conObj2 = new dbConnection();
+        try (Connection dbConnector2 = conObj2.getConnection();
+             PreparedStatement preparedStatement = dbConnector2.prepareStatement("INSERT INTO cinema.hall(hallId, AID) VALUES (?, ?)")) {
+
+            preparedStatement.setString(1, hallID);
+            preparedStatement.setString(2, adminID);
+
+            int rowsInserted = preparedStatement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("Hall Data inserted successfully.");
+                return true;
+            } else {
+                System.out.println("No rows affected. Hall Data insertion failed.");
+                return false;
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            System.out.println("Error: " + exception.getMessage());
+            return false;
+        } finally {
+            conObj2.closeConnection();
+        }
+    }
+
+
 
     public static void main(String[] args) {
         new AddHall().setVisible(true);
