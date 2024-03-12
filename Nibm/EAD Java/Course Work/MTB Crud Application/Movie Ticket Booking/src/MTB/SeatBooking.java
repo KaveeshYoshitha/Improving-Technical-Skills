@@ -5,6 +5,7 @@ import java.awt.event.*;
 
 public class SeatBooking extends JFrame implements ActionListener {
     private JTextField seatAmountField;
+    private JTextField cusNameField;
     private JButton nextBtn;
     private JButton backBtn;
 
@@ -52,13 +53,22 @@ public class SeatBooking extends JFrame implements ActionListener {
             }
         });
 
-        JLabel setAmountLabel = new JLabel("Enter the amount of seats you want to book: ");
+        JLabel setAmountLabel = new JLabel("Enter the amount of seats you want to book : ");
         setAmountLabel.setFont(new Font("Montserrat", Font.PLAIN, 35));
         setAmountLabel.setForeground(Color.WHITE);
         seatAmountField = new JTextField();
         seatAmountField.setFont(new Font("Montserrat", Font.PLAIN, 30));
         seatAmountField.setPreferredSize(new Dimension(200, 30));
         seatAmountField.setForeground(Color.BLACK);
+
+        JLabel cusNameLabel = new JLabel("Enter your name : ");
+        cusNameLabel.setFont(new Font("Montserrat", Font.PLAIN, 35));
+        cusNameLabel.setForeground(Color.WHITE);
+        cusNameField = new JTextField();
+        cusNameField.setFont(new Font("Montserrat", Font.PLAIN, 30));
+        cusNameField.setPreferredSize(new Dimension(200, 30));
+        cusNameField.setForeground(Color.BLACK);
+
 
         JPanel panel1 = new JPanel(new GridBagLayout()) {
             @Override
@@ -89,11 +99,20 @@ public class SeatBooking extends JFrame implements ActionListener {
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        panel1.add(setAmountLabel, gbc);
+        panel1.add(cusNameLabel, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 0;
+        panel1.add(cusNameField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        panel1.add(setAmountLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
         panel1.add(seatAmountField, gbc);
+
 
         panel3.add(backBtn, BorderLayout.WEST);
         panel3.add(nextBtn, BorderLayout.EAST);

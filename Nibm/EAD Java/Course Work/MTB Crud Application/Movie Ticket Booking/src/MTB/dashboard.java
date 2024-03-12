@@ -1,10 +1,9 @@
 package MTB;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.sql.ResultSet;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.*;
 
 public class dashboard extends JFrame implements ActionListener {
 
@@ -38,14 +37,31 @@ public class dashboard extends JFrame implements ActionListener {
             }
         });
 
-
         JButton addBtn = new JButton("Add");
         addBtn.setPreferredSize(new Dimension(220, 60));
         addBtn.setForeground(Color.WHITE);
         addBtn.setBackground(new Color(33, 38, 45));
         addBtn.setFont(new Font("Montserrat", Font.BOLD, 30));
         addBtn.setFocusable(false);
+        addBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                performAdd();
+            }
+        });
 
+        JButton viewBtn = new JButton("View");
+        viewBtn.setPreferredSize(new Dimension(220, 60));
+        viewBtn.setForeground(Color.WHITE);
+        viewBtn.setBackground(new Color(33, 38, 45));
+        viewBtn.setFont(new Font("Montserrat", Font.BOLD, 30));
+        viewBtn.setFocusable(false);
+        viewBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                performView();
+            }
+        });
 
         // Panel1
         JPanel panel1 = new JPanel(new GridBagLayout()) {
@@ -68,32 +84,58 @@ public class dashboard extends JFrame implements ActionListener {
         gbc.gridy = 2;
         panel1.add(addBtn, gbc);
 
-        // Panel2 (Center Panel) with GridLayout for movie posters (cards)
-        JPanel panel2 = new JPanel(new GridLayout(2, 3, 20, 20)); // Change the grid dimensions as needed
+        gbc.gridy = 3;
+        panel1.add(viewBtn, gbc);
 
-        // Adding movie posters (cards) to the center panel
-        for (int i = 1; i <= 6; i++) {
-            ImageIcon moviePoster = new ImageIcon("C:\\Users\\MSI\\OneDrive\\Desktop\\MTB Crud Application\\Assest\\images\\1.jpg" + i + ".jpg");
-            JButton movieButton = new JButton("Movie " + i);
-            movieButton.setForeground(Color.WHITE);
-            movieButton.setBackground(new Color(33, 38, 45));
-            movieButton.setFont(new Font("Montserrat", Font.BOLD, 30));
-            movieButton.setFocusable(false);
-            movieButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    selectMovie();
+        // Panel2
+        JPanel panel2 = new JPanel(new GridLayout(2, 3, 5, 5)){
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                setBackground(new Color(0, 0, 0));
+            }
+        };;
+
+        // Adding dynamic movie posters to the center panel
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cinema", "root", "root")) {
+            String query = "SELECT moviePoster, mName FROM cinema.movie LIMIT 6";
+            try (PreparedStatement statement = connection.prepareStatement(query);
+                 ResultSet resultSet = statement.executeQuery()) {
+
+                int movieIndex = 1;
+                while (resultSet.next()) {
+                    String moviePosterPath = resultSet.getString("moviePoster");
+                    String movieName = resultSet.getString("mName");
+                    System.out.println("Movie Name: " + movieName);  // Check if movieName is retrieved correctly
+
+                    ImageIcon moviePoster = getScaledImageIcon(moviePosterPath, 200, 300);
+                    JButton movieButton = new JButton(movieName);
+                    movieButton.setIcon(moviePoster);
+                    movieButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+                    movieButton.setHorizontalTextPosition(SwingConstants.CENTER);
+                    movieButton.setForeground(Color.WHITE);
+                    movieButton.setBackground(new Color(33, 38, 45));
+                    movieButton.setFont(new Font("Montserrat", Font.BOLD, 30));
+                    movieButton.setFocusable(false);
+                    movieButton.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            selectMovie();
+                        }
+                    });
+
+                    JPanel cardPanel = new JPanel(new BorderLayout());
+                    cardPanel.add(movieButton, BorderLayout.CENTER);
+
+                    panel2.add(cardPanel);
                 }
-            });
-
-
-
-            JPanel cardPanel = new JPanel(new BorderLayout());
-            cardPanel.add(new JLabel(moviePoster), BorderLayout.CENTER);
-            cardPanel.add(movieButton, BorderLayout.SOUTH);
-
-            panel2.add(cardPanel);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
+        // Print statement to check if the panel is populated
+        System.out.println("Number of components in panel2: " + panel2.getComponentCount());
 
         // Add components to the JFrame
         add(panel1, BorderLayout.WEST);
@@ -101,13 +143,30 @@ public class dashboard extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+
+    private ImageIcon getScaledImageIcon(String imagePath, int width, int height) {
+        ImageIcon originalIcon = new ImageIcon(imagePath);
+        Image originalImage = originalIcon.getImage();
+        Image scaledImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        return new ImageIcon(scaledImage);
+    }
+
     public void actionPerformed(ActionEvent e) {
-        // Handle button clicks if needed
     }
 
     private void performDashboard() {
         dispose();
         new dashboard();
+    }
+
+    private void performAdd() {
+        dispose();
+        new Add();
+    }
+
+    private void performView() {
+        dispose();
+        new view();
     }
 
     private void selectMovie() {

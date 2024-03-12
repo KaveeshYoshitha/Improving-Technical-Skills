@@ -1,20 +1,27 @@
+
 package MTB;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class dbConnection {
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/cinema";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "root";
+
     private Connection connection;
-    public Statement statement;
+    private Statement statement;
 
     public dbConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");  // Load MySQL JDBC driver
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3308/cinema", "root", "root");
+            connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
             statement = connection.createStatement();
             System.out.println("Database connected successfully!");
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | SQLException e) {
             System.err.println("Error in database connection:");
             e.printStackTrace();
         }
@@ -23,10 +30,29 @@ public class dbConnection {
     public ResultSet executeQuery(String query) {
         try {
             return statement.executeQuery(query);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.err.println("Error in query execution:");
             e.printStackTrace();
             return null;
         }
+    }
+
+    public void closeConnection() {
+        try {
+            if (statement != null) {
+                statement.close();
+            }
+            if (connection != null) {
+                connection.close();
+                System.out.println("Database connection closed.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error closing connection:");
+            e.printStackTrace();
+        }
+    }
+
+    public Connection getConnection() {
+        return connection;
     }
 }
