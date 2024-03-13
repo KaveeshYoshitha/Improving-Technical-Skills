@@ -16,15 +16,15 @@ public class SeatBooking extends JFrame implements ActionListener {
     private JButton backBtn;
 
     public SeatBooking() {
-        // JFrame
         setTitle("MovieHub");
         setSize(1500, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         getContentPane().setBackground(Color.BLACK);
+        ImageIcon logo = new ImageIcon("src/MTB/logo.png");
+        setIconImage(logo.getImage());
 
-        // Create components
         JLabel titleLabel = new JLabel("Grab Your Seat");
         titleLabel.setHorizontalAlignment(JLabel.CENTER);
         titleLabel.setVerticalAlignment(JLabel.CENTER);
@@ -120,7 +120,6 @@ public class SeatBooking extends JFrame implements ActionListener {
         panel3.add(backBtn, BorderLayout.WEST);
         panel3.add(nextBtn, BorderLayout.EAST);
 
-        // Add components to JFrame
         add(panel1, BorderLayout.CENTER);
         add(panel2, BorderLayout.NORTH);
         add(panel3, BorderLayout.SOUTH);
@@ -130,9 +129,6 @@ public class SeatBooking extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-//        if (e.getSource() == nextBtn) {
-//            performNext();
-//        }
     }
 
     public void performNext() {
@@ -140,13 +136,11 @@ public class SeatBooking extends JFrame implements ActionListener {
         String customerName = cusNameField.getText();
         String seatAmount = seatAmountField.getText();
 
-        // Validate input
         if (customerName.isEmpty() || seatAmount.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please enter both name and seat amount.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Parse seat amount as an integer
         int seatQuantity;
         try {
             seatQuantity = Integer.parseInt(seatAmount);
@@ -155,16 +149,13 @@ public class SeatBooking extends JFrame implements ActionListener {
             return;
         }
 
-        // Insert data into database
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cinema", "root", "root")) {
-            // Insert into customer table
             String customerQuery = "INSERT INTO customer (userName) VALUES (?)";
             try (PreparedStatement customerStatement = connection.prepareStatement(customerQuery)) {
                 customerStatement.setString(1, customerName);
                 customerStatement.executeUpdate();
             }
 
-            // Insert into seat table
             String seatQuery = "INSERT INTO seat (sQuantity, userName) VALUES (?, ?)";
             try (PreparedStatement seatStatement = connection.prepareStatement(seatQuery)) {
                 seatStatement.setInt(1, seatQuantity);
@@ -173,7 +164,6 @@ public class SeatBooking extends JFrame implements ActionListener {
             }
 
 
-            // Proceed to the next frame (you can customize this part based on your application)
             dispose();
 //            new food();
             new Payment(customerName);

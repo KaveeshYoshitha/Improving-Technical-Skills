@@ -17,6 +17,8 @@ public class AddHall extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         getContentPane().setBackground(Color.BLACK);
+        ImageIcon logo = new ImageIcon("src/MTB/logo.png");
+        setIconImage(logo.getImage());
 
         JLabel titleLabel = new JLabel("Add Hall");
         titleLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -86,7 +88,7 @@ public class AddHall extends JFrame implements ActionListener {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.insets = new Insets(0, 10, 80, 30); // Padding at the bottom
+        gbc.insets = new Insets(0, 10, 80, 30);
         panel1.add(titleLabel, gbc);
 
         gbc.gridy = 1;
@@ -105,7 +107,6 @@ public class AddHall extends JFrame implements ActionListener {
         panel2.add(addHallButton, BorderLayout.EAST);
         panel2.add(backBtn, BorderLayout.WEST);
 
-        // Add components to the JFrame
         add(panel1, BorderLayout.CENTER);
         add(panel2, BorderLayout.SOUTH);
         setVisible(true);
@@ -113,7 +114,6 @@ public class AddHall extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // Implement if needed
     }
 
     private void performBack() {
@@ -125,7 +125,6 @@ public class AddHall extends JFrame implements ActionListener {
         String hallID = hallIDField.getText().trim();
         String adminID = adminIDField.getText().trim();
 
-        // Validate input
         if (hallID.isEmpty() || adminID.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill in all the fields");
             return;
@@ -139,24 +138,7 @@ public class AddHall extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(this, "Adding failed for: " + hallID);
         }
 
-        // Insert data into the database
-//        try (dbConnection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cinema", "root", "root")) {
-//            String query = "INSERT INTO hall (hallID, adminID) VALUES (?, ?)";
-//            try (PreparedStatement statement = connection.prepareStatement(query)) {
-//                statement.setString(1, hallID);
-//                statement.setString(2, adminID);
-//                statement.executeUpdate();
-//            }
-//
-//            // Display success message
-//            JOptionPane.showMessageDialog(this, "Hall added successfully!");
-//
-//            // Close the current frame
-//            dispose();
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//            JOptionPane.showMessageDialog(this, "Failed to add hall. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
-//        }
+
     }
 
     private boolean addHallToDB(String hallID, String adminID) {

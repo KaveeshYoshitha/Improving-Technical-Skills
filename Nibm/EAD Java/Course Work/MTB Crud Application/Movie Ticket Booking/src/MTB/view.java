@@ -23,7 +23,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
-import java.io.ByteArrayOutputStream; // Add this import statement
+import java.io.ByteArrayOutputStream;
 import java.awt.image.BufferedImage;
 
 
@@ -41,6 +41,8 @@ public class view extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         getContentPane().setBackground(Color.BLACK);
+        ImageIcon logo = new ImageIcon("src/MTB/logo.png");
+        setIconImage(logo.getImage());
 
         JLabel titleLabel = new JLabel("View");
         titleLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -91,7 +93,6 @@ public class view extends JFrame implements ActionListener {
         String[] columns = {"Movie ID", "Movie Name", "Movie Poster", "Admin ID"};
         model = new DefaultTableModel(columns, 0);
         table = new JTable(model);
-        // Customize your table as needed
         JScrollPane scrollPane = new JScrollPane(table);
 
         JPanel panel1 = new JPanel(new GridBagLayout()) {
@@ -112,19 +113,17 @@ public class view extends JFrame implements ActionListener {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.insets = new Insets(0, 10, 80, 30); // Padding at the bottom
+        gbc.insets = new Insets(0, 10, 80, 30);
         panel1.add(titleLabel, gbc);
 
         panel2.add(updateButton, BorderLayout.EAST);
         panel2.add(backBtn, BorderLayout.WEST);
         panel2.add(deleteButton, BorderLayout.CENTER);
 
-        // Add components to the JFrame
         add(panel1, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
         add(panel2, BorderLayout.SOUTH);
 
-        // Load data from the database
         loadDataFromDatabase();
 
         setVisible(true);
@@ -132,7 +131,6 @@ public class view extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // Implement if needed
     }
 
     private void performBack() {
@@ -146,40 +144,30 @@ public class view extends JFrame implements ActionListener {
 
     private void loadDataFromDatabase() {
         try {
-            // Load your database driver (replace "com.mysql.cj.jdbc.Driver" with your actual driver)
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            // Establish the database connection
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cinema", "root", "root");
 
-            // Execute a query to retrieve data
             String query = "SELECT mID, mName, moviePoster, AID FROM cinema.movie";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            // Clear existing table data
             model.setRowCount(0);
 
-            // Populate the table with the retrieved data
             while (resultSet.next()) {
                 String mID = resultSet.getString("mID");
                 String mName = resultSet.getString("mName");
 
-                // Handle BLOB data
                 Blob moviePosterBlob = resultSet.getBlob("moviePoster");
                 byte[] moviePosterBytes = moviePosterBlob.getBytes(1, (int) moviePosterBlob.length());
 
-                // For simplicity, assuming moviePoster is a byte array
-                // You might need to convert it to an appropriate image type for display
                 String moviePoster = new String(moviePosterBytes);
 
                 String AID = resultSet.getString("AID");
 
-                // Add a new row to the table
                 model.addRow(new Object[]{mID, mName, moviePoster, AID});
             }
 
-            // Close resources
             resultSet.close();
             preparedStatement.close();
             connection.close();
@@ -190,33 +178,23 @@ public class view extends JFrame implements ActionListener {
 
     private void performDelete() {
         try {
-            // Load your database driver (replace "com.mysql.cj.jdbc.Driver" with your actual driver)
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            // Establish the database connection
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cinema", "root", "root");
 
-            // Prepare the delete query
             String deleteQuery = "DELETE FROM cinema.movie WHERE mID = ?";
             PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery);
 
-            // Get the selected row index from the JTable
             int selectedRow = table.getSelectedRow();
 
-            // Check if a row is selected
             if (selectedRow != -1) {
-                // Get the movie ID from the selected row
                 String mID = model.getValueAt(selectedRow, 0).toString();
 
-                // Set the parameter for the delete query
                 deleteStatement.setString(1, mID);
 
-                // Execute the delete query
                 int rowsAffected = deleteStatement.executeUpdate();
 
-                // Check if the delete was successful and show a message box
                 if (rowsAffected > 0) {
-                    // Remove the row from the JTable
                     model.removeRow(selectedRow);
                     JOptionPane.showMessageDialog(this, "Deleted successfully", "Delete Status", JOptionPane.INFORMATION_MESSAGE);
                 } else {
@@ -226,7 +204,6 @@ public class view extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this, "Please select a row to delete", "Delete Status", JOptionPane.WARNING_MESSAGE);
             }
 
-            // Close resources
             deleteStatement.close();
             connection.close();
         } catch (ClassNotFoundException | SQLException e) {
@@ -237,25 +214,19 @@ public class view extends JFrame implements ActionListener {
 
     private void performUpdate() {
         try {
-            // Load your database driver (replace "com.mysql.cj.jdbc.Driver" with your actual driver)
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            // Establish the database connection
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cinema", "root", "root");
 
-            // Prepare the update query
             String updateQuery = "UPDATE cinema.movie SET mName = ?, moviePoster = ? WHERE mID = ?";
             PreparedStatement updateStatement = connection.prepareStatement(updateQuery);
 
-            // Iterate through the table rows to get the changes and update the database
             for (int row = 0; row < model.getRowCount(); row++) {
                 String mID = model.getValueAt(row, 0).toString();
                 String newName = model.getValueAt(row, 1).toString();
 
-                // Check if the name is different from the original value
                 if (!newName.equals(getOriginalNameFromDatabase(mID, connection))) {
 
-                    // Convert Image to BLOB
                     ImageIcon moviePosterIcon = (ImageIcon) model.getValueAt(row, 2);
                     Blob moviePosterBlob = connection.createBlob();
                     try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
@@ -263,15 +234,12 @@ public class view extends JFrame implements ActionListener {
                         moviePosterBlob.setBytes(1, byteArrayOutputStream.toByteArray());
                     }
 
-                    // Set parameters for the update query
                     updateStatement.setString(1, newName);
                     updateStatement.setBlob(2, moviePosterBlob);
                     updateStatement.setString(3, mID);
 
-                    // Execute the update query
                     int rowsAffected = updateStatement.executeUpdate();
 
-                    // Check if the update was successful and show a message box
                     if (rowsAffected > 0) {
                         JOptionPane.showMessageDialog(this, "Updated successfully", "Update Status", JOptionPane.INFORMATION_MESSAGE);
                     } else {
@@ -280,7 +248,6 @@ public class view extends JFrame implements ActionListener {
                 }
             }
 
-            // Close resources
             updateStatement.close();
             connection.close();
         } catch (ClassNotFoundException | SQLException | IOException e) {
@@ -290,18 +257,15 @@ public class view extends JFrame implements ActionListener {
 
     private String getOriginalNameFromDatabase(String mID, Connection connection) throws SQLException {
         String originalName = null;
-        // Execute a query to retrieve the original name from the database
         String query = "SELECT mName FROM cinema.movie WHERE mID = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, mID);
         ResultSet resultSet = preparedStatement.executeQuery();
 
-        // Retrieve the original name
         if (resultSet.next()) {
             originalName = resultSet.getString("mName");
         }
 
-        // Close resources
         resultSet.close();
         preparedStatement.close();
 

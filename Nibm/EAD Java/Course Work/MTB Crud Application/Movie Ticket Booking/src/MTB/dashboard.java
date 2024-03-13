@@ -8,15 +8,15 @@ import java.sql.*;
 public class dashboard extends JFrame implements ActionListener {
 
     public dashboard() {
-        // JFrame
         setTitle("MovieHub");
         setSize(1500, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         getContentPane().setBackground(Color.BLACK);
+        ImageIcon logo = new ImageIcon("src/MTB/logo.png");
+        setIconImage(logo.getImage());
 
-        // Create components
         JLabel titleLabel = new JLabel("Admin");
         titleLabel.setHorizontalAlignment(JLabel.CENTER);
         titleLabel.setVerticalAlignment(JLabel.CENTER);
@@ -63,7 +63,6 @@ public class dashboard extends JFrame implements ActionListener {
             }
         });
 
-        // Panel1
         JPanel panel1 = new JPanel(new GridBagLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
@@ -75,7 +74,7 @@ public class dashboard extends JFrame implements ActionListener {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.insets = new Insets(0, 10, 80, 30); // Padding at the bottom
+        gbc.insets = new Insets(0, 10, 80, 30);
         panel1.add(titleLabel, gbc);
 
         gbc.gridy = 1;
@@ -87,7 +86,6 @@ public class dashboard extends JFrame implements ActionListener {
         gbc.gridy = 3;
         panel1.add(viewBtn, gbc);
 
-        // Panel2
         JPanel panel2 = new JPanel(new GridLayout(2, 3, 5, 5)){
             @Override
             protected void paintComponent(Graphics g) {
@@ -96,7 +94,6 @@ public class dashboard extends JFrame implements ActionListener {
             }
         };;
 
-        // Adding dynamic movie posters to the center panel
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cinema", "root", "root")) {
             String query = "SELECT moviePoster, mName FROM cinema.movie LIMIT 6";
             try (PreparedStatement statement = connection.prepareStatement(query);
@@ -106,7 +103,7 @@ public class dashboard extends JFrame implements ActionListener {
                 while (resultSet.next()) {
                     String moviePosterPath = resultSet.getString("moviePoster");
                     String movieName = resultSet.getString("mName");
-                    System.out.println("Movie Name: " + movieName);  // Check if movieName is retrieved correctly
+                    System.out.println("Movie Name: " + movieName);
 
                     ImageIcon moviePoster = getScaledImageIcon(moviePosterPath, 200, 300);
                     JButton movieButton = new JButton(movieName);
@@ -134,10 +131,8 @@ public class dashboard extends JFrame implements ActionListener {
             e.printStackTrace();
         }
 
-        // Print statement to check if the panel is populated
         System.out.println("Number of components in panel2: " + panel2.getComponentCount());
 
-        // Add components to the JFrame
         add(panel1, BorderLayout.WEST);
         add(new JScrollPane(panel2), BorderLayout.CENTER);
         setVisible(true);

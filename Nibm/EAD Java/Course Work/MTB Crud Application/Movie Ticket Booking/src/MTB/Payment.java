@@ -24,15 +24,15 @@ public class Payment extends JFrame implements ActionListener {
     public Payment(String cusName) {
         this.cusName = cusName;
 
-        // JFrame
         setTitle("MovieHub");
         setSize(1500, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         getContentPane().setBackground(Color.BLACK);
+        ImageIcon logo = new ImageIcon("src/MTB/logo.png");
+        setIconImage(logo.getImage());
 
-        // Create components
         JLabel titleLabel = new JLabel("Payment");
         titleLabel.setHorizontalAlignment(JLabel.CENTER);
         titleLabel.setVerticalAlignment(JLabel.CENTER);
@@ -66,7 +66,6 @@ public class Payment extends JFrame implements ActionListener {
             }
         });
 
-        // Panel1
         JPanel panel1 = new JPanel(new GridBagLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
@@ -80,7 +79,6 @@ public class Payment extends JFrame implements ActionListener {
         gbc.gridy = 0;
         panel1.add(titleLabel, gbc);
 
-        // Panel2
         JPanel panel2 = new JPanel(new BorderLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
@@ -162,10 +160,7 @@ public class Payment extends JFrame implements ActionListener {
         add(panel2, BorderLayout.SOUTH);
         add(panel3, BorderLayout.CENTER);
 
-        // Fetch seat data from the database and update labels
         updateSeatLabels();
-
-        // Set frame visible
         setVisible(true);
 
 
@@ -174,18 +169,16 @@ public class Payment extends JFrame implements ActionListener {
 
     private void updateSeatLabels() {
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cinema", "root", "root")) {
-            String query = "SELECT sQuantity FROM seat LIMIT 1";  // Assuming you have only one row in the seat table
+            String query = "SELECT sQuantity FROM seat LIMIT 1";
             try (PreparedStatement statement = connection.prepareStatement(query);
                  ResultSet resultSet = statement.executeQuery()) {
 
                 if (resultSet.next()) {
                     int sQuantity = resultSet.getInt("sQuantity");
 
-                    // Set sAmountLabel text
                     sAmountLabel.setText(String.valueOf(sQuantity));
 
-                    // Calculate and set sPriceLabel text
-                    int totalPrice = sQuantity * 200; //Assuming price is 200
+                    int totalPrice = sQuantity * 200;
                     sPriceLabel.setText(String.valueOf(totalPrice));
                     billLabel.setText(String.valueOf(totalPrice));
                 }
@@ -198,7 +191,6 @@ public class Payment extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // Handle button clicks if needed
     }
 
     private void performBack() {
@@ -210,30 +202,26 @@ public class Payment extends JFrame implements ActionListener {
 
 
     private void performPay() {
-            // Assuming you have the username and movie name from previous panels
-            String userName = cusName;  // Replace with actual username
-        // ch the total bill from the billLabel
+        String userName = cusName;
 
-            int totalBill = Integer.parseInt(billLabel.getText());
+        int totalBill = Integer.parseInt(billLabel.getText());
 
-            // Save payment details to the database
-            try (Connection connection001 = DriverManager.getConnection("jdbc:mysql://localhost:3306/cinema", "root", "root")) {
-                String query = "INSERT INTO cinema.pay(userName,amount) VALUES (?, ?)";
-                try (PreparedStatement statement = connection001.prepareStatement(query)) {
-                    statement.setString(1, cusName);
-                    statement.setInt(2, totalBill);
-                    statement.executeUpdate();
-                }
-
-                JOptionPane.showMessageDialog(this, "Payment Successful!");
-
-                // Close the payment window and navigate to the dashboard
-                dispose();
-                new dashboard();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Failed to save payment details.", "Error", JOptionPane.ERROR_MESSAGE);
+        try (Connection connection001 = DriverManager.getConnection("jdbc:mysql://localhost:3306/cinema", "root", "root")) {
+            String query = "INSERT INTO cinema.pay(userName,amount) VALUES (?, ?)";
+            try (PreparedStatement statement = connection001.prepareStatement(query)) {
+                statement.setString(1, cusName);
+                statement.setInt(2, totalBill);
+                statement.executeUpdate();
             }
+
+            JOptionPane.showMessageDialog(this, "Payment Successful!");
+
+            dispose();
+            new dashboard();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Failed to save payment details.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
 
     }
@@ -245,11 +233,7 @@ public class Payment extends JFrame implements ActionListener {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            // Prompt the user for the username (you might want to get it from your SeatBooking frame)
-//            String cusName = JOptionPane.showInputDialog("Enter username:");
 
-            // Create an instance of Payment with the provided username
-//            new Payment(cusName);
         });
     }
 }

@@ -17,7 +17,7 @@ public class dbConnection {
 
     public dbConnection() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");  // Load MySQL JDBC driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
             statement = connection.createStatement();
             System.out.println("Database connected successfully!");

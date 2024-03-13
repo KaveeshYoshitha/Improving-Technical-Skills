@@ -18,15 +18,15 @@ public class AddMovie extends JFrame {
     JTextField adminIDField;
 
     public AddMovie() {
-        // JFrame
         setTitle("MovieHub");
         setSize(1500, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         getContentPane().setBackground(Color.BLACK);
+        ImageIcon logo = new ImageIcon("src/MTB/logo.png");
+        setIconImage(logo.getImage());
 
-        // Create components
         JLabel titleLabel = new JLabel("Add Movie");
         titleLabel.setHorizontalAlignment(JLabel.CENTER);
         titleLabel.setVerticalAlignment(JLabel.CENTER);
@@ -68,12 +68,10 @@ public class AddMovie extends JFrame {
         choosePosterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Open file chooser dialog
                 JFileChooser fileChooser = new JFileChooser();
                 fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
                 int result = fileChooser.showOpenDialog(null);
 
-                // If a file is chosen, set the path to the text field
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
                     moviePosterField.setText(selectedFile.getAbsolutePath());
@@ -116,7 +114,6 @@ public class AddMovie extends JFrame {
             }
         });
 
-        // Panel1
         JPanel panel1 = new JPanel(new GridBagLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
@@ -135,7 +132,7 @@ public class AddMovie extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.insets = new Insets(0, 10, 80, 30); // Padding at the bottom
+        gbc.insets = new Insets(0, 10, 80, 30);
         panel1.add(titleLabel, gbc);
 
         gbc.gridy = 1;
@@ -167,7 +164,6 @@ public class AddMovie extends JFrame {
         panel2.add(backBtn, BorderLayout.WEST);
 
 
-        // Add components to the JFrame
         add(panel1, BorderLayout.CENTER);
         add(panel2, BorderLayout.SOUTH);
         setVisible(true);
@@ -197,7 +193,6 @@ public class AddMovie extends JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Adding failed for: " + movieName);
         }
-//        addMovieToDB(movieName, movieID, moviePoster, adminID);
 
 
     }
@@ -205,7 +200,6 @@ public class AddMovie extends JFrame {
     private boolean addMovieToDB(String movieName, String movieID, String moviePoster, String adminID) {
         dbConnection conObj1 = new dbConnection();
         try (Connection dbConnector1 = conObj1.getConnection();
-//        try (Connection dbConnector1 = conObj1.getConnection();
              PreparedStatement preparedStatement = dbConnector1.prepareStatement("INSERT INTO cinema.movie (mID, mName, moviePoster, AID) VALUES (?, ?, ?, ?)")) {
 
             preparedStatement.setString(1, movieID);

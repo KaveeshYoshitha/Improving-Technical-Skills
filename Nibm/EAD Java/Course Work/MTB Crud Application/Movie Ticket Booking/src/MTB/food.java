@@ -1,4 +1,4 @@
-//package MTB;
+import javax.swing.*;//package MTB;
 //
 //import javax.swing.*;
 //import java.awt.*;
@@ -15,6 +15,8 @@
 //        setLocationRelativeTo(null);
 //        setLayout(new BorderLayout());
 //        getContentPane().setBackground(Color.BLACK);
+//        ImageIcon logo = new ImageIcon("src/MTB/logo.png");
+//        setIconImage(logo.getImage());
 //
 //        // Create components
 //        JLabel titleLabel = new JLabel("Foods and Beverages");

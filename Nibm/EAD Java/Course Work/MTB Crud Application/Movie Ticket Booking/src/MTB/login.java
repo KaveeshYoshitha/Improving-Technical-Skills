@@ -5,7 +5,6 @@ import java.awt.event.*;
 import java.sql.ResultSet;
 
 
-//import MTB.connection.DatabaseConnection;
 import com.mysql.cj.jdbc.JdbcConnection;
 
 import javax.swing.*;
@@ -44,8 +43,9 @@ public class login extends JFrame  {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         getContentPane().setBackground(Color.BLACK);
+        ImageIcon logo = new ImageIcon("src/MTB/logo.png");
+        setIconImage(logo.getImage());
 
-        // Create components
         JLabel titleLabel = new JLabel("Login");
         titleLabel.setHorizontalAlignment(JLabel.CENTER);
         titleLabel.setVerticalAlignment(JLabel.CENTER);
@@ -84,7 +84,6 @@ public class login extends JFrame  {
         });
 
 
-//        loginButton.addActionListener(this);
 
         // Panel1
         JPanel panel1 = new JPanel() {
@@ -97,7 +96,6 @@ public class login extends JFrame  {
         panel1.setPreferredSize(new Dimension(1500, 100));
         panel1.add(titleLabel);
 
-        // Panel2 with GridBagLayout
         JPanel panel2 = new JPanel(new GridBagLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
@@ -125,7 +123,6 @@ public class login extends JFrame  {
         gbc.gridy = 1;
         panel2.add(passwordField, gbc);
 
-        // Panel3
         JPanel panel3 = new JPanel(){
             @Override
             protected void paintComponent(Graphics g) {
@@ -138,7 +135,6 @@ public class login extends JFrame  {
 
 
 
-        // Add components to the frame
         add(panel1, BorderLayout.NORTH);
         add(panel2, BorderLayout.CENTER);
         add(panel3, BorderLayout.SOUTH);
@@ -189,7 +185,6 @@ public class login extends JFrame  {
     }
 
     public static void main(String[] args) {
-//        login l1 = new login();
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {

@@ -106,15 +106,15 @@ import java.awt.event.ActionListener;
 public class Add extends JFrame {
 
     public Add() {
-        // JFrame
         setTitle("MovieHub");
         setSize(1500, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         getContentPane().setBackground(Color.BLACK);
+        ImageIcon logo = new ImageIcon("src/MTB/logo.png");
+        setIconImage(logo.getImage());
 
-        // Create components
         JLabel titleLabel = new JLabel("Admin");
         titleLabel.setHorizontalAlignment(JLabel.CENTER);
         titleLabel.setVerticalAlignment(JLabel.CENTER);
@@ -187,7 +187,6 @@ public class Add extends JFrame {
             }
         });
 
-        // Panel1
         JPanel panel1 = new JPanel(new GridBagLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
@@ -199,7 +198,7 @@ public class Add extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.insets = new Insets(0, 10, 80, 30); // Padding at the bottom
+        gbc.insets = new Insets(0, 10, 80, 30);
         panel1.add(titleLabel, gbc);
 
         gbc.gridy = 1;
@@ -214,16 +213,15 @@ public class Add extends JFrame {
         JPanel panel2 = new JPanel(new GridLayout(2, 1, 20, 20)){
             @Override
             protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            setBackground(new Color(0, 0, 0));
-        }};
+                super.paintComponent(g);
+                setBackground(new Color(0, 0, 0));
+            }};
 
         panel2.add(movieBtn);
         panel2.add(hallBtn);
 
 
 
-        // Add components to the JFrame
         add(panel1, BorderLayout.WEST);
         add(new JScrollPane(panel2), BorderLayout.CENTER);
         setVisible(true);
